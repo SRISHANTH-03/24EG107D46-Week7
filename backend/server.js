@@ -3,23 +3,26 @@ import { config } from "dotenv";
 import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
+
 import { userApp } from "./APIs/UserAPI.js";
 import { authorApp } from "./APIs/AuthorAPI.js";
 import { adminApp } from "./APIs/AdminAPI.js";
 import { commonApp } from "./APIs/CommonAPI.js";
+
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
+// File path setup
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load env variables
+// Load environment variables
 config({ path: path.resolve(__dirname, "../.env") });
 
-// Create express app
+// Create Express app
 const app = exp();
 
-// CORS
+// CORS configuration
 app.use(
   cors({
     origin: [
@@ -30,10 +33,8 @@ app.use(
   })
 );
 
-// Cookie parser
+// Middleware
 app.use(cookieParser());
-
-// Body parser
 app.use(exp.json());
 
 // Routes
@@ -42,7 +43,7 @@ app.use("/author-api", authorApp);
 app.use("/admin-api", adminApp);
 app.use("/auth", commonApp);
 
-// Connect DB
+// Database connection
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.DB_URL);
@@ -63,17 +64,18 @@ const connectDB = async () => {
 
 connectDB();
 
-// Invalid path handler
+// Invalid route handler
 app.use((req, res) => {
   res.status(404).json({
     message: `Path ${req.url} is invalid`,
   });
 });
 
-// Error handling middleware
+// Global error handler
 app.use((err, req, res, next) => {
   console.log("Error:", err);
 
+  // Validation Error
   if (err.name === "ValidationError") {
     return res.status(400).json({
       message: "Validation Error",
@@ -81,6 +83,7 @@ app.use((err, req, res, next) => {
     });
   }
 
+  // Cast Error
   if (err.name === "CastError") {
     return res.status(400).json({
       message: "Cast Error",
@@ -88,8 +91,11 @@ app.use((err, req, res, next) => {
     });
   }
 
+  // Duplicate Key Error
   const errCode =
-    err.code ?? err.cause?.code ?? err.errorResponse?.code;
+    err.code ??
+    err.cause?.code ??
+    err.errorResponse?.code;
 
   const keyValue =
     err.keyValue ??
@@ -105,6 +111,7 @@ app.use((err, req, res, next) => {
     });
   }
 
+  // Server Error
   res.status(500).json({
     message: "Server side error",
   });
