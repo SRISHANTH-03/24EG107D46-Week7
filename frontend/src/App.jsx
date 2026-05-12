@@ -91,7 +91,7 @@ function App() {
       },
     ],
     {
-      basename: "/atp-week-7-blog-app-", // ✅ only needed if you use that URL
+
     }
   );
 
