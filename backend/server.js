@@ -25,7 +25,7 @@ const app = exp();
 // CORS configuration
 app.use(
   cors({
-    origin: ["https://24eg107d46-week7-app.vercel.app"],
+    origin: ["https://24eg107d46-week7-5j1lwcso1-srishanth-03s-projects.vercel.app"],
     credentials: true,
   })
 );
