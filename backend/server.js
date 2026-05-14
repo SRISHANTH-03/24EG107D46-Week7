@@ -25,7 +25,7 @@ const app = exp();
 // CORS configuration
 app.use(
   cors({
-    origin: [/^http:\/\/localhost:\d+$/, "24eg107d46-capstrone-bawsfnnk3-srishanth-03s-projects.vercel.app"],
+    origin: ["https://24eg107d46-week7-app.vercel.app"],
     credentials: true,
   })
 );
