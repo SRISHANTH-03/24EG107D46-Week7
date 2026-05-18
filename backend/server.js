@@ -30,9 +30,11 @@ const defaultLocalOrigins = [
   "http://127.0.0.1:5175",
 ];
 
+const vercelOrigin = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined;
 const allowedOrigins = [
   ...(process.env.ALLOWED_ORIGINS?.split(",") ?? []),
   process.env.FRONTEND_URL,
+  vercelOrigin,
 ]
   .map((origin) => origin?.trim())
   .filter(Boolean)
@@ -60,7 +62,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
 
 app.use(cookieParser());
 app.use(exp.json({ limit: "10mb" }));
