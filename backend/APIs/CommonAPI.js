@@ -113,11 +113,13 @@ commonApp.post("/login", async (req, res) => {
       }
     );
 
-    // Set cookie (IMPORTANT FOR PRODUCTION)
+    const isProduction = process.env.NODE_ENV === "production";
     res.cookie("token", signedToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
+      maxAge: 1000 * 60 * 60, // 1 hour
+      path: "/",
     });
 
     // Remove password from response
@@ -142,10 +144,13 @@ commonApp.post("/login", async (req, res) => {
 // LOGOUT
 // ─────────────────────────────────────────────────────
 commonApp.get("/logout", (req, res) => {
+  const isProduction = process.env.NODE_ENV === "production";
+
   res.clearCookie("token", {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
+    path: "/",
   });
 
   res.status(200).json({
