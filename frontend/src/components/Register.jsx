@@ -15,7 +15,7 @@ import {
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import api from "../api/axiosClient";
+import api from "../api/axios";
 
 function Register() {
   const {

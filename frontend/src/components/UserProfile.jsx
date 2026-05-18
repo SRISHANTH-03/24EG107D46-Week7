@@ -1,6 +1,6 @@
 import { useAuth } from "../store/authStore";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axiosClient";
+import api from "../api/axios";
 import { useEffect, useState } from "react";
 
 import {

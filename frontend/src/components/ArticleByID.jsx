@@ -1,6 +1,6 @@
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../api/axiosClient";
+import api from "../api/axios";
 import { useAuth } from "../store/authStore";
 import { toast } from "react-hot-toast";
 import {

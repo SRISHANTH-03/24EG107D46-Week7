@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import api from "../api/axiosClient";
+import api from "../api/axios";
 
 import {
   formCard,

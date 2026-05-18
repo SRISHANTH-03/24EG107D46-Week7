@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import api from "../api/axiosClient";
+import api from "../api/axios";
 
 export const useAuth = create((set) => ({
   currentUser: null,
